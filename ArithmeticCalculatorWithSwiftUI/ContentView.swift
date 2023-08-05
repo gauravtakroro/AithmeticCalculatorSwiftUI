@@ -27,7 +27,7 @@ enum CalcButton: String {
     case decimal = "."
     case percent = "%"
     case negative = "+/-"
-
+    
     var buttonBackgroundColor: Color {
         switch self {
         case .add, .subtract, .mutliply, .divide, .equal:
@@ -40,16 +40,61 @@ enum CalcButton: String {
     }
 }
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image("home_icon")
-            Text("Calculator").font(.system(size: 72))
-        }
-        .padding()
-    }
+enum ArithmeticOperation {
+    case add, subtract, multiply, divide, none
 }
 
+struct ContentView: View {
+    
+    let buttons: [[CalcButton]] = [
+        [.clear, .negative, .percent, .divide],
+        [.seven, .eight, .nine, .mutliply],
+        [.four, .five, .six, .subtract],
+        [.one, .two, .three, .add],
+        [.zero, .decimal, .equal],
+    ]
+    
+    var body: some View {
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            VStack {
+                Spacer()
+                // Our buttons
+                ForEach(buttons, id: \.self) { row in
+                    HStack(spacing: 12) {
+                        ForEach(row, id: \.self) { item in
+                            Button(action: {
+                                // button actio
+                            }, label: {
+                                Text(item.rawValue)
+                                    .font(.system(size: 32))
+                                    .frame(
+                                        width: self.buttonWidth(item: item),
+                                        height: self.buttonHeight()
+                                    )
+                                    .background(item.buttonBackgroundColor)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(self.buttonWidth(item: item)/2)
+                            })
+                        }
+                    }
+                    .padding(.bottom, 3)
+                }
+            }
+        }
+    }
+    
+    func buttonWidth(item: CalcButton) -> CGFloat {
+        if item == .zero {
+            return ((UIScreen.main.bounds.width - (4*12)) / 4) * 2
+        }
+        return (UIScreen.main.bounds.width - (5*12)) / 4
+    }
+
+    func buttonHeight() -> CGFloat {
+        return (UIScreen.main.bounds.width - (5*12)) / 4
+    }
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
