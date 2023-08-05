@@ -43,10 +43,8 @@ enum CalcButton: String {
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Image("home_icon")
+            Text("Calculator").font(.system(size: 72))
         }
         .padding()
     }
