@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  ArithmeticCalculatorWithSwiftUI
 //
-//  Created by Roro Solutions LLP on 05/08/23.
+//  Created by Gaurav Tak on 05/08/23.
 //
 
 import SwiftUI
