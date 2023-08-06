@@ -50,6 +50,7 @@ struct CalculatorView: View {
                         ForEach(row, id: \.self) { item in
                             Button(action: {
                                 //  Button Action Implementation
+                                self.didTap(button: item)
                             }, label: {
                                 Text(item.rawValue)
                                     .font(.system(size: 32))
@@ -69,16 +70,12 @@ struct CalculatorView: View {
         }
     }
 }
-struct CalculatorView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+
 extension CalculatorView {
     
     func ridZero(result: Double) -> String {
-            let value = String(format: "%g", result)
-            return value
+        let value = String(format: "%g", result)
+        return value
     }
     
     func buttonWidth(item: CalcButton) -> CGFloat {
@@ -103,3 +100,96 @@ extension CalculatorView {
         }
     }
 }
+extension CalculatorView {
+    
+    func didTap(button: CalcButton) {
+        switch button {
+        case .add, .subtract, .mutliply, .divide, .equal:
+            if isArithmeticOperationButtonTapped && (button == .add || button == .divide || button == .mutliply || button == .subtract) {
+                didTap(button: .equal)
+            }
+            if button == .add {
+                self.currentArithmeticOperation = .add
+                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.isArithmeticOperationButtonTapped = true
+                self.valueDisplayed = "\(self.valueDisplayed)+"
+                if expressionOfCalculations.last != "+" {
+                    self.valueDisplayed = "+"
+                    self.expressionOfCalculations = "\(self.expressionOfCalculations)+"
+                }
+                
+            }
+            else if button == .subtract {
+                self.currentArithmeticOperation = .subtract
+                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.isArithmeticOperationButtonTapped = true
+                if expressionOfCalculations.last != "-" {
+                    self.valueDisplayed = "-"
+                    self.expressionOfCalculations = "\(self.expressionOfCalculations)-"
+                }
+            }
+            else if button == .mutliply {
+                self.currentArithmeticOperation = .multiply
+                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.isArithmeticOperationButtonTapped = true
+                if expressionOfCalculations.last != "x" {
+                    self.valueDisplayed = "x"
+                    self.expressionOfCalculations = "\(self.expressionOfCalculations)x"
+                }
+            }
+            else if button == .divide {
+                self.currentArithmeticOperation = .divide
+                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.isArithmeticOperationButtonTapped = true
+                if expressionOfCalculations.last != "/" {
+                    self.valueDisplayed = "/"
+                    self.expressionOfCalculations = "\(self.expressionOfCalculations)/"
+                }
+            }
+            else if button == .equal {
+                let runningValue = self.runningNumberValue
+                let currentValue = Double(self.valueDisplayed) ?? 0.0
+                self.isArithmeticOperationButtonTapped = false
+                switch self.currentArithmeticOperation {
+                case .add: self.valueDisplayed = ridZero(result: (runningValue + currentValue))
+                case .subtract: self.valueDisplayed = ridZero(result: (runningValue - currentValue))
+                case .multiply: self.valueDisplayed = ridZero(result: (runningValue * currentValue))
+                case .divide: self.valueDisplayed = ridZero(result: (runningValue / currentValue))
+                case .none:
+                    break
+                }
+                expressionOfCalculations = "\(self.expressionOfCalculations)=\(self.valueDisplayed)"
+            }
+        case .clear:
+            self.valueDisplayed = "0"
+            self.expressionOfCalculations = ""
+            self.isArithmeticOperationButtonTapped = false
+        case .decimal, .percent, .negative:
+            break
+        default:
+            let number = button.rawValue
+            if self.isArithmeticOperationButtonTapped == true {
+                if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
+                    self.valueDisplayed = "\(self.valueDisplayed)\(number)"
+                } else {
+                    self.valueDisplayed = number
+                }
+            }
+            else {
+                if self.valueDisplayed != "0" {
+                    self.valueDisplayed = "\(self.valueDisplayed)\(number)"
+                } else {
+                    self.valueDisplayed = number
+                }
+            }
+            self.expressionOfCalculations = "\(self.expressionOfCalculations)\(number)"
+        }
+    }
+}
+
+struct CalculatorView_Previews: PreviewProvider {
+    static var previews: some View {
+        CalculatorView()
+    }
+}
+
