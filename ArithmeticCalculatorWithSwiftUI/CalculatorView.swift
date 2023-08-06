@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalculatorView: View {
-    @State var valueDisplayed = "0"
+    @State var resultValueDisplayed = "0"
     @State var runningNumberValue = 0.0
     @State var currentArithmeticOperation: ArithmeticOperation = .none
     @State var isArithmeticOperationButtonTapped = false
@@ -37,7 +37,7 @@ struct CalculatorView: View {
                 // Text display
                 HStack {
                     Spacer()
-                    Text(valueDisplayed)
+                    Text(resultValueDisplayed)
                         .bold()
                         .font(.system(size: 100))
                         .minimumScaleFactor(0.4)
@@ -110,98 +110,98 @@ extension CalculatorView {
             }
             if button == .add {
                 self.currentArithmeticOperation = .add
-                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.runningNumberValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = true
-                self.valueDisplayed = "\(self.valueDisplayed)+"
+                self.resultValueDisplayed = "\(self.resultValueDisplayed)+"
                 if expressionOfCalculations.last != "+" {
-                    self.valueDisplayed = "+"
+                    self.resultValueDisplayed = "+"
                     self.expressionOfCalculations = "\(self.expressionOfCalculations)+"
                 }
                 
             }
             else if button == .subtract {
                 self.currentArithmeticOperation = .subtract
-                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.runningNumberValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = true
                 if expressionOfCalculations.last != "-" {
-                    self.valueDisplayed = "-"
+                    self.resultValueDisplayed = "-"
                     self.expressionOfCalculations = "\(self.expressionOfCalculations)-"
                 }
             }
             else if button == .mutliply {
                 self.currentArithmeticOperation = .multiply
-                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.runningNumberValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = true
                 if expressionOfCalculations.last != "x" {
-                    self.valueDisplayed = "x"
+                    self.resultValueDisplayed = "x"
                     self.expressionOfCalculations = "\(self.expressionOfCalculations)x"
                 }
             }
             else if button == .divide {
                 self.currentArithmeticOperation = .divide
-                self.runningNumberValue = Double(self.valueDisplayed) ?? 0.0
+                self.runningNumberValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = true
                 if expressionOfCalculations.last != "/" {
-                    self.valueDisplayed = "/"
+                    self.resultValueDisplayed = "/"
                     self.expressionOfCalculations = "\(self.expressionOfCalculations)/"
                 }
             }
             else if button == .equal {
                 let runningValue = self.runningNumberValue
-                let currentValue = Double(self.valueDisplayed) ?? 0.0
+                let currentValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = false
                 switch self.currentArithmeticOperation {
-                case .add: self.valueDisplayed = ridZero(result: (runningValue + currentValue))
-                case .subtract: self.valueDisplayed = ridZero(result: (runningValue - currentValue))
-                case .multiply: self.valueDisplayed = ridZero(result: (runningValue * currentValue))
-                case .divide: self.valueDisplayed = ridZero(result: (runningValue / currentValue))
+                case .add: self.resultValueDisplayed = ridZero(result: (runningValue + currentValue))
+                case .subtract: self.resultValueDisplayed = ridZero(result: (runningValue - currentValue))
+                case .multiply: self.resultValueDisplayed = ridZero(result: (runningValue * currentValue))
+                case .divide: self.resultValueDisplayed = ridZero(result: (runningValue / currentValue))
                 case .none:
                     break
                 }
-                expressionOfCalculations = "\(self.expressionOfCalculations)=\(self.valueDisplayed)"
+                expressionOfCalculations = "\(self.expressionOfCalculations)=\(self.resultValueDisplayed)"
             }
         case .clear:
-            self.valueDisplayed = "0"
+            self.resultValueDisplayed = "0"
             self.expressionOfCalculations = ""
             self.isArithmeticOperationButtonTapped = false
         case .decimal:
-            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
-                if self.valueDisplayed.contains(".") {
+            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+                if self.resultValueDisplayed.contains(".") {
                     // dont do anything
                 } else {
-                    self.valueDisplayed = "\(self.valueDisplayed)."
+                    self.resultValueDisplayed = "\(self.resultValueDisplayed)."
                     self.expressionOfCalculations = "\(self.expressionOfCalculations)."
                 }
             } else {
-                self.valueDisplayed = "."
+                self.resultValueDisplayed = "."
                 self.expressionOfCalculations = "\(self.expressionOfCalculations)."
             }
         case .percent:
-            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
-                self.valueDisplayed = ridZero(result: (Double(self.valueDisplayed) ?? 0.0) / 100.0)
-                self.expressionOfCalculations = "\(self.expressionOfCalculations)/100 = \(self.valueDisplayed)"
+            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+                self.resultValueDisplayed = ridZero(result: (Double(self.resultValueDisplayed) ?? 0.0) / 100.0)
+                self.expressionOfCalculations = "\(self.expressionOfCalculations)/100 = \(self.resultValueDisplayed)"
             }
             break
         case .negative:
-            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
-                let valueBeforeNegative = Double(self.valueDisplayed) ?? 0.0
-                self.valueDisplayed = ridZero(result:valueBeforeNegative * -1)
-                self.expressionOfCalculations = "\(self.expressionOfCalculations)x-1 = \(self.valueDisplayed)"
+            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+                let valueBeforeNegative = Double(self.resultValueDisplayed) ?? 0.0
+                self.resultValueDisplayed = ridZero(result:valueBeforeNegative * -1)
+                self.expressionOfCalculations = "\(self.expressionOfCalculations)x-1 = \(self.resultValueDisplayed)"
             }
         default:
             let number = button.rawValue
             if self.isArithmeticOperationButtonTapped == true {
-                if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
-                    self.valueDisplayed = "\(self.valueDisplayed)\(number)"
+                if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+                    self.resultValueDisplayed = "\(self.resultValueDisplayed)\(number)"
                 } else {
-                    self.valueDisplayed = number
+                    self.resultValueDisplayed = number
                 }
             }
             else {
-                if self.valueDisplayed != "0" {
-                    self.valueDisplayed = "\(self.valueDisplayed)\(number)"
+                if self.resultValueDisplayed != "0" {
+                    self.resultValueDisplayed = "\(self.resultValueDisplayed)\(number)"
                 } else {
-                    self.valueDisplayed = number
+                    self.resultValueDisplayed = number
                 }
             }
             self.expressionOfCalculations = "\(self.expressionOfCalculations)\(number)"
