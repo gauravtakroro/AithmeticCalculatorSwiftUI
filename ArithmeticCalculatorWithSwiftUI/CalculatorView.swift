@@ -164,8 +164,30 @@ extension CalculatorView {
             self.valueDisplayed = "0"
             self.expressionOfCalculations = ""
             self.isArithmeticOperationButtonTapped = false
-        case .decimal, .percent, .negative:
+        case .decimal:
+            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
+                if self.valueDisplayed.contains(".") {
+                    // dont do anything
+                } else {
+                    self.valueDisplayed = "\(self.valueDisplayed)."
+                    self.expressionOfCalculations = "\(self.expressionOfCalculations)."
+                }
+            } else {
+                self.valueDisplayed = "."
+                self.expressionOfCalculations = "\(self.expressionOfCalculations)."
+            }
+        case .percent:
+            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
+                self.valueDisplayed = ridZero(result: (Double(self.valueDisplayed) ?? 0.0) / 100.0)
+                self.expressionOfCalculations = "\(self.expressionOfCalculations)/100 = \(self.valueDisplayed)"
+            }
             break
+        case .negative:
+            if self.valueDisplayed != "+" && self.valueDisplayed != "-" && self.valueDisplayed != "/" && self.valueDisplayed != "x" {
+                let valueBeforeNegative = Double(self.valueDisplayed) ?? 0.0
+                self.valueDisplayed = ridZero(result:valueBeforeNegative * -1)
+                self.expressionOfCalculations = "\(self.expressionOfCalculations)x-1 = \(self.valueDisplayed)"
+            }
         default:
             let number = button.rawValue
             if self.isArithmeticOperationButtonTapped == true {
