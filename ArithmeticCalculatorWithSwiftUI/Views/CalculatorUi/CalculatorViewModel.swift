@@ -85,7 +85,7 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
             self.expressionOfCalculations = ""
             self.isArithmeticOperationButtonTapped = false
         case .decimal:
-            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+            if isResultNotContainsArithmeticOperatorSymbol() {
                 if self.resultValueDisplayed.contains(".") {
                     // dont do anything
                 } else {
@@ -97,14 +97,14 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
                 self.expressionOfCalculations = "\(self.expressionOfCalculations)."
             }
         case .percent:
-            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+            if isResultNotContainsArithmeticOperatorSymbol() {
                 let result = (Double(self.resultValueDisplayed) ?? 0.0) / 100.0
                 self.resultValueDisplayed = result.ridZero()
                 self.expressionOfCalculations = "\(self.expressionOfCalculations)/100 = \(self.resultValueDisplayed)"
             }
             break
         case .negative:
-            if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+            if isResultNotContainsArithmeticOperatorSymbol() {
                 let valueBeforeNegative = Double(self.resultValueDisplayed) ?? 0.0
                 let result = valueBeforeNegative * -1
                 self.resultValueDisplayed = result.ridZero()
@@ -113,7 +113,7 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
         default:
             let number = button.rawValue
             if self.isArithmeticOperationButtonTapped == true {
-                if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+                if isResultNotContainsArithmeticOperatorSymbol() {
                     self.resultValueDisplayed = "\(self.resultValueDisplayed)\(number)"
                 } else {
                     self.resultValueDisplayed = number
@@ -129,5 +129,14 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
             self.expressionOfCalculations = "\(self.expressionOfCalculations)\(number)"
         }
         print("DidTap \(resultValueDisplayed) \(expressionOfCalculations)")
+    }
+   
+    private func isResultNotContainsArithmeticOperatorSymbol() -> Bool {
+        // isResultNotContainsArithmeticOperatorSymbol
+        if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
+            return true
+        } else {
+            return false
+        }
     }
 }
