@@ -14,12 +14,17 @@ protocol CalculatorViewModelProtocol: ObservableObject {
 }
 
 class CalculatorViewModel: CalculatorViewModelProtocol {
+    
     private var runningNumberValue = 0.0
     private var currentArithmeticOperation: ArithmeticOperation = .none
     private var isArithmeticOperationButtonTapped = false
-    @Published var resultValueDisplayed = "0"
-    @Published var expressionOfCalculations = ""
     
+    @Published var resultValueDisplayed = "0"
+    // this is used to show the result value and show output what we tapped with calc buttons
+    
+    @Published var expressionOfCalculations = ""
+    // this is used to show the complete expressions value of calculations and show output what we tapped with calc buttons, numbers buttons  etc.
+
     func didTap(button: CalcButton) {
         switch button {
         case .add, .subtract, .mutliply, .divide:
