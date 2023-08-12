@@ -68,14 +68,16 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
                 let runningValue = self.runningNumberValue
                 let currentValue = Double(self.resultValueDisplayed) ?? 0.0
                 self.isArithmeticOperationButtonTapped = false
+                let result:Double
                 switch self.currentArithmeticOperation {
-                case .add: self.resultValueDisplayed = ridZero(result: (runningValue + currentValue))
-                case .subtract: self.resultValueDisplayed = ridZero(result: (runningValue - currentValue))
-                case .multiply: self.resultValueDisplayed = ridZero(result: (runningValue * currentValue))
-                case .divide: self.resultValueDisplayed = ridZero(result: (runningValue / currentValue))
-                case .none:
-                    break
+                case .add: result = runningValue + currentValue
+                case .subtract: result = runningValue - currentValue
+                case .multiply: result = runningValue * currentValue
+                case .divide: result = runningValue / currentValue
+                case .none: result = currentValue
                 }
+                self.resultValueDisplayed = result.ridZero()
+         
                 expressionOfCalculations = "\(self.expressionOfCalculations)=\(self.resultValueDisplayed)"
             }
         case .clear:
@@ -96,14 +98,16 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
             }
         case .percent:
             if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
-                self.resultValueDisplayed = ridZero(result: (Double(self.resultValueDisplayed) ?? 0.0) / 100.0)
+                let result = (Double(self.resultValueDisplayed) ?? 0.0) / 100.0
+                self.resultValueDisplayed = result.ridZero()
                 self.expressionOfCalculations = "\(self.expressionOfCalculations)/100 = \(self.resultValueDisplayed)"
             }
             break
         case .negative:
             if self.resultValueDisplayed != "+" && self.resultValueDisplayed != "-" && self.resultValueDisplayed != "/" && self.resultValueDisplayed != "x" {
                 let valueBeforeNegative = Double(self.resultValueDisplayed) ?? 0.0
-                self.resultValueDisplayed = ridZero(result:valueBeforeNegative * -1)
+                let result = valueBeforeNegative * -1
+                self.resultValueDisplayed = result.ridZero()
                 self.expressionOfCalculations = "\(self.expressionOfCalculations)x-1 = \(self.resultValueDisplayed)"
             }
         default:
@@ -125,10 +129,5 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
             self.expressionOfCalculations = "\(self.expressionOfCalculations)\(number)"
         }
         print("DidTap \(resultValueDisplayed) \(expressionOfCalculations)")
-    }
-    
-    private func ridZero(result: Double) -> String {
-        let value = String(format: "%g", result)
-        return value
     }
 }

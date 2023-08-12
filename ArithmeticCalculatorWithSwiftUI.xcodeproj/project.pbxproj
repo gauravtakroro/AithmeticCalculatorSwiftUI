@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		932D01532A872B2B002CF80B /* Double+Extesions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932D01522A872B2B002CF80B /* Double+Extesions.swift */; };
 		938CCED32A7EB5530085BBCF /* ArithmeticCalculatorWithSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CCED22A7EB5530085BBCF /* ArithmeticCalculatorWithSwiftUIApp.swift */; };
 		938CCED52A7EB5530085BBCF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CCED42A7EB5530085BBCF /* ContentView.swift */; };
 		938CCED72A7EB5560085BBCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 938CCED62A7EB5560085BBCF /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		932D01522A872B2B002CF80B /* Double+Extesions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extesions.swift"; sourceTree = "<group>"; };
 		938CCECF2A7EB5530085BBCF /* ArithmeticCalculatorWithSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArithmeticCalculatorWithSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938CCED22A7EB5530085BBCF /* ArithmeticCalculatorWithSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArithmeticCalculatorWithSwiftUIApp.swift; sourceTree = "<group>"; };
 		938CCED42A7EB5530085BBCF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -38,6 +40,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		932D01512A872AE2002CF80B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				932D01522A872B2B002CF80B /* Double+Extesions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		938CCEC62A7EB5530085BBCF = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +87,7 @@
 		93D0F7922A7FA11A00BA8357 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				932D01512A872AE2002CF80B /* Extensions */,
 				93D0F7932A7FA20300BA8357 /* CalculatorUi */,
 			);
 			path = Views;
@@ -167,6 +178,7 @@
 				938CCEE32A7ED7E10085BBCF /* CalcButton.swift in Sources */,
 				938CCED32A7EB5530085BBCF /* ArithmeticCalculatorWithSwiftUIApp.swift in Sources */,
 				93D0F7952A7FA22A00BA8357 /* CalculatorViewModel.swift in Sources */,
+				932D01532A872B2B002CF80B /* Double+Extesions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
