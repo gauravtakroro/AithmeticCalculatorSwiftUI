@@ -2,7 +2,7 @@
 //  Double+Extesions.swift
 //  ArithmeticCalculatorWithSwiftUI
 //
-//  Created by Roro Solutions LLP on 12/08/23.
+//  Created by Gaurav Tak on 12/08/23.
 //
 
 import Foundation
