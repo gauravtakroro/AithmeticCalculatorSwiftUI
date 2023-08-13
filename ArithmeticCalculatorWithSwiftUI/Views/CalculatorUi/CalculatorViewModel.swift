@@ -54,6 +54,9 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     
     private func didTapEqualOperator() {
         // didTapEqualOperator
+        if !self.isArithmeticOperationButtonTapped {
+            return // don't perform any calculations if no Arithmetic Operation Button Tapped
+        }
         let runningValue = self.runningNumberValue
         let currentValue = Double(self.resultValueDisplayed) ?? 0.0
         self.isArithmeticOperationButtonTapped = false
@@ -133,8 +136,30 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     
     private func didTapArithmeticOperator(button: CalcButton) {
         // didTapArithmeticOperator
-        if isArithmeticOperationButtonTapped {
+        if isArithmeticOperationButtonTapped && isResultNotContainsArithmeticOperatorSymbol() {
             didTap(button: .equal)
+        } else if isArithmeticOperationButtonTapped && !isResultNotContainsArithmeticOperatorSymbol() {
+            let tappedArithmeticOperation: ArithmeticOperation
+            if button == .add {
+               tappedArithmeticOperation = .add
+            }
+            else if button == .subtract {
+               tappedArithmeticOperation = .subtract
+            }
+            else if button == .mutliply {
+                tappedArithmeticOperation = .multiply
+            }
+            else if button == .divide {
+                tappedArithmeticOperation = .divide
+            } else {
+                tappedArithmeticOperation = .none
+            }
+            if tappedArithmeticOperation == self.currentArithmeticOperation {
+                return  // no code required because same operator button tapped twice or multiple times
+            }
+            self.resultValueDisplayed = "\(self.runningNumberValue)"
+            // remove last element of string (as expressionOfCalculations)
+            self.expressionOfCalculations = "\(self.expressionOfCalculations.dropLast())"
         }
         self.isArithmeticOperationButtonTapped = true
         self.runningNumberValue = Double(self.resultValueDisplayed) ?? 0.0
