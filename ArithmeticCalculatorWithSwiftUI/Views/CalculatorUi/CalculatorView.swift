@@ -90,10 +90,6 @@ extension CalculatorView {
         }
     }
 }
-extension CalculatorView {
-    
-}
-
 struct CalculatorView_Previews: PreviewProvider {
     static var previews: some View {
         CalculatorView()
