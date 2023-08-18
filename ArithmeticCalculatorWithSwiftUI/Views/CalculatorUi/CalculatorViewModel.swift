@@ -19,7 +19,7 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     private var currentArithmeticOperation: ArithmeticOperation = .none
     private var isArithmeticOperationButtonTapped = false
     
-    @Published var resultValueDisplayed = "0"
+    @Published var resultValueDisplayed = ""
     // this is used to show the result value and show output what we tapped with calc buttons
     
     @Published var expressionOfCalculations = ""
@@ -74,6 +74,9 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     }
     
     private func didTapPercentOperator() {
+        if self.resultValueDisplayed == "" {
+            return
+        }
         // didTapPercentOperator
         if isResultNotContainsArithmeticOperatorSymbol() {
             let result = (Double(self.resultValueDisplayed) ?? 0.0) / 100.0
@@ -83,6 +86,9 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     }
     
     private func didTapPlusMinusSign() {
+        if self.resultValueDisplayed == "" {
+            return
+        }
         // didTapPlusMinusSign
         if isResultNotContainsArithmeticOperatorSymbol() {
             let valueBeforeNegative = Double(self.resultValueDisplayed) ?? 0.0
@@ -94,7 +100,7 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     
     private func didTapClearExpression() {
         // didTapClearExpression
-        self.resultValueDisplayed = "0"
+        self.resultValueDisplayed = ""
         self.expressionOfCalculations = ""
         self.isArithmeticOperationButtonTapped = false
     }
@@ -125,7 +131,7 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
             }
         }
         else {
-            if self.resultValueDisplayed != "0" {
+            if self.resultValueDisplayed != "" {
                 self.resultValueDisplayed = "\(self.resultValueDisplayed)\(number)"
             } else {
                 self.resultValueDisplayed = number
@@ -135,6 +141,9 @@ class CalculatorViewModel: CalculatorViewModelProtocol {
     }
     
     private func didTapArithmeticOperator(button: CalcButton) {
+        if self.resultValueDisplayed == "" {
+            return
+        }
         // didTapArithmeticOperator
         if isArithmeticOperationButtonTapped && isResultNotContainsArithmeticOperatorSymbol() {
             didTap(button: .equal)
